@@ -90,9 +90,11 @@ class OpenSslEncryption implements AbstractAdapter
     public function decrypt($token)
     {
         $token = base64_decode($token);
-        list($token, $this->iv) = explode('&&', $token);
-
+        $ex=explode('&&', $token);
+        if(count($ex)==2){
+        list($token, $this->iv) = $ex;
         return openssl_decrypt($token, $this->cipher, $this->key, 0, hex2bin($this->iv));
+        }
     }
 
     /**
